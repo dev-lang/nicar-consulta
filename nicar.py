@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+from datetime import datetime
 
 def buscar_dominio(driver, dominio, zona):
     try:
@@ -112,13 +113,20 @@ def procesar_dominio(dominio_completo):
         return {"nombre": nombre, "zona": zona}
     return None
 
-def main(archivo_dominios, dominio_unico, generar_csv):
+def generar_nombre_csv():
+    # Generar un nombre de archivo con la fecha y hora actual
+    fecha_actual = datetime.now().strftime("%m%d%Y%H%M%S")
+    return f"resultados-dominios_{fecha_actual}.csv"
+
+def main(archivo_dominios, dominio_unico, generar_csv, nombre_csv):
     # Configurar el navegador
     driver = webdriver.Chrome()  # Asegúrate de tener ChromeDriver instalado
 
-    # Abrir un archivo CSV para guardar los resultados (si se especifica el parámetro -csv)
+    # Abrir un archivo CSV para guardar los resultados (si se especifica el parámetro --csv)
     if generar_csv:
-        csv_file = open("resultados_dominios.csv", mode="w", newline="", encoding="utf-8")
+        if not nombre_csv:
+            nombre_csv = generar_nombre_csv()
+        csv_file = open(nombre_csv, mode="w", newline="", encoding="utf-8")
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(["Dominio", "Estado", "Nombre y Apellido", "CUIT/CUIL/ID", "Fecha de Alta", "Fecha de vencimiento"])
 
@@ -177,7 +185,7 @@ def main(archivo_dominios, dominio_unico, generar_csv):
         driver.quit()
         if generar_csv:
             csv_file.close()
-            print("Resultados guardados en 'resultados_dominios.csv'.")
+            print(f"Resultados guardados en '{nombre_csv}'.")
 
 if __name__ == "__main__":
     # Configurar el parser de argumentos
@@ -185,6 +193,7 @@ if __name__ == "__main__":
     parser.add_argument("--archivo", help="Ruta del archivo de texto con la lista de dominios.")
     parser.add_argument("--dominio", help="Buscar un solo dominio (ejemplo: dominio.com.ar).")
     parser.add_argument("--csv", action="store_true", help="Generar un archivo CSV con los resultados.")
+    parser.add_argument("--output", help="Nombre personalizado para el archivo CSV.")
     args = parser.parse_args()
 
     # Validar argumentos
@@ -192,5 +201,4 @@ if __name__ == "__main__":
         parser.error("Debes proporcionar un archivo de dominios (--archivo) o un dominio único (--dominio).")
 
     # Ejecutar la función principal
-    main(args.archivo, args.dominio, args.csv)
-
+    main(args.archivo, args.dominio, args.csv, args.output)
