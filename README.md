@@ -33,6 +33,8 @@ Paso 3: mover chromedriver a la carpeta
 El script posee actualmente dos modos de ejecución. 
 Podrás ejecutar el script tanto con salida por consola como incluir el exportar los resultados a un archivo .csv
 
+Nota: si no se utiliza el parámetro --output, el nombre de archivo tomará por defecto el nombre hardcodeado (incluye fecha y hora de creacion)
+
 Antes de ejecutar debes crear un archivo con la lista de dominios a consultar (p.e: dominios.txt)
 
 ### Con exportación de .CSV:
@@ -65,6 +67,14 @@ Si se agrega el parámetro --csv, se guardará en un archivo .csv
 
 ```cmd
 python3 nicar.py --dominio dominio.com.ar --csv
+```
+
+### Nombre de archivo personalizado
+
+Permite la creación del archivo CSV con un nombre personalizado (funciona tanto con dominio como con archivo)
+
+```cmd
+python3 nicar.py --dominio dominio.com.ar --csv --output consulta.csv
 ```
 
 ### Ayuda integrada:
