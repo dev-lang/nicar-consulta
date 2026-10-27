@@ -6,27 +6,29 @@
 Script para hacer consulta de dominios en nic.ar
 
 El script permite consultar a través del sitio nic.ar la disponibilidad de varios dominios de forma secuencial, 
-tambien es válido si se define un único dominio. Requiere chromedriver y selenium para funcionar adecuadamente.
+tambien es válido si se define un único dominio. El script utiliza Selenium para consultar la disponibilidad de dominios en nic.ar y obtener información de los registros. <br>
+Selenium Manager permite gestionar automáticamente ChromeDriver en las versiones compatibles de Selenium.
 
-## Requisitos:
+## Requisitos
 
-Python 3 (probado en 3.10.11): https://www.python.org/downloads/<br />
-Selenium (se instala desde pip)<br />
-Chromedriver <br />
+- Python 3 (probado en Python 3.13.12): https://www.python.org/downloads/
+- Selenium 4.21.0.
+- Google Chrome instalado.
 
-## **Instalación**
+## Instalación
 
-Paso 1: Crear una carpeta en un directorio, descargar chromedriver y colocarlo en la misma carpeta donde se descargará el script
+Clonar el repositorio e instalar las dependencias:
 
-Paso 2: Ejecutar los pasos para descargar script e instalar requisitos:
-
-```cmd
+```bash
 git clone https://github.com/dev-lang/nicar-consulta/
 cd nicar-consulta
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-Paso 3: mover chromedriver a la carpeta
+Selenium 4.21.0 incluye Selenium Manager, que puede detectar, descargar y configurar automáticamente una versión compatible de ChromeDriver cuando sea necesario. <br>
+En una instalación estándar, no es necesario descargarlo ni configurarlo manualmente.
+
+Para que la descarga automática funcione cuando sea necesaria, Selenium Manager debe poder acceder a Internet.
 
 ## **Ejecución**
 
